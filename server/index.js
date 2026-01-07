@@ -1,9 +1,20 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 
-app.listen(3000, ()=> {
-    console.log("app is listening on port 3000")
-})
+const MongoURI = "mongodb://localhost:27017/"
+mongoose.connect(MongoURI)
+    .then(()=>{
+        console.log("Connected to MongoDb!")
+        app.listen(3000, ()=> {
+            console.log("app is listening on port 3000")
+        })
+    })
+    .catch((err)=>{
+        console.log("❌mongodb connection error", err)
+    })
+
+
 
 app.get('/', (req, res)=> {
     res.json({msg: "Welcome to test api"})
