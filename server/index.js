@@ -14,8 +14,15 @@ mongoose.connect(MongoURI)
         console.log("❌mongodb connection error", err)
     })
 
+app.use(express.json());
 
+// test api route
+app.get('/', (req, res)=> {
+    res.json({msg: "Hello Abuki"})
+})
 // router
-const userRoute = require('./routes/user.routes.js');
+// const userRoute = require('./routes/user.routes.js');
+const authRoute = require('./routes/auth.routes.js');
 
-app.use('/api/user', userRoute)
+// app.use('/api/user', userRoute)
+app.use('/api/auth', authRoute)
