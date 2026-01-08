@@ -15,7 +15,7 @@ mongoose.connect(MongoURI)
     })
 
 
+// router
+const userRoute = require('./routes/user.routes.js');
 
-app.get('/', (req, res)=> {
-    res.json({msg: "Welcome to test api"})
-})
+app.use('/api/user', userRoute)
