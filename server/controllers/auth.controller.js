@@ -1,8 +1,9 @@
 const User = require('../model/user.model.js')
 const bcryptjs = require('bcryptjs');
+const {errorHandler} = require('../utils/error.js')
 
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
 
 
     try {
@@ -17,7 +18,7 @@ const signup = async (req, res) => {
         res.status(201).json("User created successfully!")
         
     } catch (error) {
-        console.log(error)
+        next(errorHandler(200, "check error handler"))
     }
 }
 
