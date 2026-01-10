@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors')
 
-const MongoURI = "mongodb://localhost:27017/"
+const MongoURI = "mongodb://localhost:27017/student_forum"
 mongoose.connect(MongoURI)
     .then(()=>{
         console.log("Connected to MongoDb!")
@@ -15,6 +16,7 @@ mongoose.connect(MongoURI)
     })
 
 app.use(express.json());
+app.use(cors())
 
 // test api route
 app.get('/', (req, res)=> {
