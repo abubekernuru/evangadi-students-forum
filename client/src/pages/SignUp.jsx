@@ -32,7 +32,7 @@ function SignUp() {
         return;
       }
       setLoading(false)
-      navigate('/')
+      navigate('/sign-in')
     } catch (error) {
       console.log(error)
       setError(error.message)
@@ -46,7 +46,7 @@ function SignUp() {
     <div className='flex flex-col bg-white p-10 m-5 shadow-xl max-w-lg mx-auto rounded-lg'>      
       <h2 className='text-xl font-bold mb-2 text-center text-gray-800'>Join the network</h2>
       <p className='text-center text-sm text-gray-500 mb-6'>
-        Already have an account? <Link className='text-orange-500 hover:underline' to={'/'}>Sign in</Link>
+        Already have an account? <Link className='text-orange-500 hover:underline' to={'/sign-in'}>Sign in</Link>
       </p>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input 
@@ -94,7 +94,7 @@ function SignUp() {
         />
 
         {/* Submit Button */}
-        <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition-colors mt-2'>
+        <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-centern cursor-pointer'>
           {loading ? "loading..." : "Agree and Join"}
         </button>
         {error && <p className='text-red-500 text-sm text-center mt-2'>

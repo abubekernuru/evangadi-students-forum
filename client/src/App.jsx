@@ -6,6 +6,7 @@ import Landing from './pages/Landing.jsx'
 import AsqQuestion from './pages/AsqQuestion.jsx'
 import About from './pages/About.jsx'
 import Header from './components/Header.jsx'
+import SignIn from './pages/SignIn.jsx'
 function App() {
 
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/' element={<Landing />}></Route>
       <Route path='/home' element={<Home />}></Route>
       <Route path='/sign-up' element={<SignUp />}></Route>
+      <Route path='/sign-in' element={<SignIn />}></Route>
       <Route path='/askquestion' element={<AsqQuestion />}></Route>
       <Route path='/qdetailanda' element={<QdetailandA />}></Route>
       <Route path='/about' element={<About />}></Route>
