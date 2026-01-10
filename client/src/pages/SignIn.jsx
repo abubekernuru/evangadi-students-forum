@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 
-function SignIn() {
+function SignIn({switchToSignUp}) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -29,7 +29,7 @@ function SignIn() {
           return
         }
         setLoading(false)
-        navigate('/')
+        navigate('/home')
     } catch (error) {
       setError(error.message)
       setLoading(false)
@@ -42,7 +42,7 @@ function SignIn() {
     <div className='flex flex-col bg-white p-10 m-5 shadow-xl max-w-lg mx-auto rounded-lg'>      
       <h2 className='text-xl font-bold mb-2 text-center text-gray-800'>Login to your account</h2>
       <p className='text-center text-sm text-gray-500 mb-6'>
-        Do not have an account? <Link className='text-orange-400 hover:underline ' to={'/sign-up'}>Create a new account</Link>
+        Do not have an account? <span onClick={switchToSignUp} className='text-orange-400 hover:underline cursor-pointer' to={'/sign-up'}>Create a new account</span>
       </p>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input 
