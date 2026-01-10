@@ -7,6 +7,7 @@ import AsqQuestion from './pages/AsqQuestion.jsx'
 import About from './pages/About.jsx'
 import Header from './components/Header.jsx'
 import SignIn from './pages/SignIn.jsx'
+import Footer from './components/Footer.jsx'
 function App() {
 
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path='/qdetailanda' element={<QdetailandA />}></Route>
       <Route path='/about' element={<About />}></Route>
     </Routes>
+    <Footer />
   </BrowserRouter>
   )
 }
