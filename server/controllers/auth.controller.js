@@ -35,7 +35,7 @@ const signin = async (req, res, next) => {
         if(!validPassword){
             return res.status(401).json({message: "Wrong Credential!"})
         }
-        const token = jwt.sign({id: validUser._id,}, process.env.JWT_SECRET);
+        const token = jwt.sign({id: validUser._id, username: validUser.username}, process.env.JWT_SECRET);
         const {password: pass, ...rest} = validUser._doc;
         const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
         res

@@ -29,6 +29,7 @@ function SignIn({switchToSignUp}) {
           return
         }
         setLoading(false)
+        localStorage.setItem('token', data.token);
         navigate('/home')
     } catch (error) {
       setError(error.message)
