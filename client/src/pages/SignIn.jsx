@@ -9,6 +9,7 @@ function SignIn({switchToSignUp}) {
     email: '',
     password: ''
   })
+  // react redux
   const {loading, error} = useSelector((state)=>state.user)
   const navigate = useNavigate();
   const dispatch = useDispatch();
