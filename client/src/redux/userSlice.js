@@ -20,12 +20,12 @@ const userSlice = createSlice({
         state.loading = false;
         state.error = null;
     },
-    // Call this if login or checkUser fails
+    
     signInFailure: (state, action) => {
         state.error = action.payload;
         state.loading = false;
     },
-    // Call this to log out
+    
     signOut: (state) => {
         state.currentUser = null;
         state.loading = false;
