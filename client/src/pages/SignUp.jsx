@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom'
+import OAuth from '../components/OAuth';
 
 function SignUp({switchToSignIn}) {
   const [formData, setFormData] = useState({
@@ -97,6 +98,7 @@ function SignUp({switchToSignIn}) {
         <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-centern cursor-pointer'>
           {loading ? "loading..." : "Agree and Join"}
         </button>
+        <OAuth />
         {error && <p className='text-red-500 text-sm text-center mt-2'>
           {error}
         </p>}
