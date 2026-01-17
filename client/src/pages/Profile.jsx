@@ -15,6 +15,14 @@ function Profile() {
         data.append("upload_preset", "profile_preset_2"); 
         data.append("cloud_name", "dv8q3oyfj");
 
+        if(file.size > 7000000){
+            alert("File size exceeds 7MB. Please choose a smaller file.");
+            return;
+        }
+        if(!file.type.startsWith("image/")){
+            alert("Please select a valid image file.");
+            return;
+        }
         try {
             setImageUploading(true);
             const res = await fetch("https://api.cloudinary.com/v1_1/dv8q3oyfj/image/upload", {
