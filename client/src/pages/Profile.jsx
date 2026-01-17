@@ -7,6 +7,7 @@ function Profile() {
     const fileInputRef = useRef(null);
     const [formData, setFormData] = useState({});
     const [imageUploading, setImageUploading] = useState(false);
+    const [localPreview, setLocalPreview] = useState(null);
 
     // image Upload functionality
     const uploadImage = async (file) => {
@@ -43,15 +44,20 @@ function Profile() {
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if(!file) return;
+        // For local preview
+        setLocalPreview(URL.createObjectURL(file));
+        // Upload to cloudinary
         const imageUrl = await uploadImage(file);
-        setFormData({...formData, avatar: imageUrl});    
+        setFormData({...formData, avatar: imageUrl});   
+        // Free up memory
+        URL.revokeObjectURL(file);
     };
 
     const handleSubmit = async (e)=> {
         e.preventDefault();
         // console.log("Form Data Submitted: ", formData);
         try {
-            const res = fetch('/api/user/updateProfile', {
+            const res = fetch(`/api/user/update/${currentUser.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -79,7 +85,7 @@ return (
                 onChange={handleImageChange}
             />
             <img
-                src={formData.avatar || currentUser.avatar} 
+                src={localPreview || formData.avatar || currentUser.avatar} 
                 alt="profile-picture" 
                 className="h-20 w-20 rounded-full object-cover mx-auto cursor-pointer mb-3" 
                 onClick={()=>fileInputRef.current.click()}

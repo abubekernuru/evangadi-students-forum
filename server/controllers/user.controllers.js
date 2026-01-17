@@ -13,4 +13,12 @@ const checkUser = async (req, res) => {
     }
 };
 
-module.exports = {checkUser};
+const updateProfile = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+module.exports = {checkUser, updateProfile};
