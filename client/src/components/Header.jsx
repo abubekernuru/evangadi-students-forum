@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 
 function Header() {
     const currentUser = useSelector((state) => state.user.currentUser)
-    console.log(currentUser)
+    // console.log(currentUser)
   return (
     <header className='bg-white font-normal shadow-sm'>
         <nav className='flex justify-between p-3 items-center max-w-3xl mx-auto'>

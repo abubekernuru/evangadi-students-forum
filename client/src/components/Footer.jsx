@@ -11,7 +11,7 @@ function Footer() {
         <img src={darkLogo} className='w-40 mb-6' alt="logo" />
         </div>
         <div className='flex-1 font-semibold md:text-center text-sm pb-5'>
-            Developed by <Link target="_blank" className='hover:underline' to={"https://www.linkedin.com/in/abubeker-nuru-861815251/"}>Abubeker</Link> for Evangadi
+            Developed by <Link target="_blank" className='hover:underline' to={"https://www.linkedin.com/in/abubeker-nuru-861815251/"}>Abubeker</Link> for Evangadi Students
         </div>
         <div className='flex-1 '>
             <div className='flex gap-4 text-3xl md:justify-end pb-5'>

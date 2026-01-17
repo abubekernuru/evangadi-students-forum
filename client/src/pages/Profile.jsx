@@ -1,31 +1,84 @@
-import {useRef} from 'react';
+import {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function Profile() {
     const {currentUser, loading, error} = useSelector((state)=>state.user);
     const fileInputRef = useRef(null);
+    const [formData, setFormData] = useState({});
+    const [imageUploading, setImageUploading] = useState(false);
+
+    // image Upload functionality
+    const uploadImage = async (file) => {
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", "profile_preset_2"); 
+        data.append("cloud_name", "dv8q3oyfj");
+
+        try {
+            setImageUploading(true);
+            const res = await fetch("https://api.cloudinary.com/v1_1/dv8q3oyfj/image/upload", {
+                method: "POST",
+                body: data
+            });
+            const json = await res.json();
+            console.log(json.secure_url);
+            setImageUploading(false);
+            return json.secure_url;
+        } catch (error) {
+            console.log(error)
+            setImageUploading(false);
+        }
+    }
+
+    // image change handler
+    const handleImageChange = async (e) => {
+        const file = e.target.files[0];
+        if(!file) return;
+        const imageUrl = await uploadImage(file);
+        setFormData({...formData, avatar: imageUrl});    
+    };
 
     const handleSubmit = async (e)=> {
+        e.preventDefault();
+        // console.log("Form Data Submitted: ", formData);
+        try {
+            const res = fetch('/api/user/updateProfile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await res.json();
+            // console.log("Profile updated successfully: ", data);
+        } catch (error) {
+            console.log(error)
+        }
     }
     const handleChange = (e)=>{
+        setFormData({...formData, [e.target.id]: e.target.value});
     }
 return (
     <div className='flex flex-col bg-white p-10 m-5 shadow-xl max-w-lg mx-auto rounded-lg'>      
-        <h2 className='text-xl font-bold mb-2 text-center text-gray-800'>Update Profile</h2>
+        <h2 className='text-xl font-bold mb-3 text-center text-gray-800'>Update Profile</h2>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
             <input 
                 type="file"
                 accept="image/*"
                 hidden
                 ref={fileInputRef}
+                onChange={handleImageChange}
             />
             <img
-                src={currentUser.avatar} 
+                src={formData.avatar || currentUser.avatar} 
                 alt="profile-picture" 
-                className="h-20 w-20 rounded-full object-cover mx-auto cursor-pointer" 
+                className="h-20 w-20 rounded-full object-cover mx-auto cursor-pointer mb-3" 
                 onClick={()=>fileInputRef.current.click()}
+
             />
+            <p className='text-center text-blue-500'>           {imageUploading ? "Uploading Image..." : ""}
+            </p>
             <input 
                 className='border border-gray-300 rounded-md p-3 w-full focus:outline-none focus:ring-1 focus:ring-blue-500' 
                 type="email" 
@@ -70,7 +123,6 @@ return (
                 type="password" 
                 placeholder='Password' 
                 id='password'
-                required
                 onChange={(e)=>handleChange(e)}
             />
             <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-centern cursor-pointer'>
