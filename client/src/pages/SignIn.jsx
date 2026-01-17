@@ -67,7 +67,7 @@ function SignIn({switchToSignUp}) {
 
         {/* Submit Button */}
         <button type='submit' className='bg-orange-400 text-white py-3 rounded-md font-semibold hover:opacity-90 transition-colors mt-2 text-center cursor-pointer'>
-          {loading ? "loading..." : "Submit"}
+          {loading ? "loading..." : "Login"}
         </button>
         <OAuth />
         {error && <p className='text-red-500 text-sm text-center mt-2'>
