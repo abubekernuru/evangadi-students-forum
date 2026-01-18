@@ -1,8 +1,7 @@
 import {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { }
+import { useSelector, useDispatch } from 'react-redux';
+import { updateStart, updateSuccess, updateFailure } from '../redux/userSlice.js';
 
 function Profile() {
     const {currentUser, loading, error} = useSelector((state)=>state.user);
@@ -10,6 +9,7 @@ function Profile() {
     const [formData, setFormData] = useState({});
     const [imageUploading, setImageUploading] = useState(false);
     const [localPreview, setLocalPreview] = useState(null);
+    const [updateSuccessful, setUpdateSuccessful] = useState(false);
     const dispatch = useDispatch();
 
     // image Upload functionality
@@ -48,7 +48,8 @@ function Profile() {
         const file = e.target.files[0];
         if(!file) return;
         // For local preview
-        setLocalPreview(URL.createObjectURL(file));
+        const previewUrl = URL.createObjectURL(file);
+        setLocalPreview(previewUrl);
         // Upload to cloudinary
         const imageUrl = await uploadImage(file);
         setFormData({...formData, avatar: imageUrl});   
@@ -58,9 +59,10 @@ function Profile() {
 
     const handleSubmit = async (e)=> {
         e.preventDefault();
-        // console.log("Form Data Submitted: ", formData);
         try {
-            const res = fetch(`/api/user/update/${currentUser.id}`, {
+            dispatch(updateStart());
+            setUpdateSuccessful(false);
+            const res = await fetch(`/api/user/update/${currentUser._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -68,9 +70,16 @@ function Profile() {
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
-            // console.log("Profile updated successfully: ", data);
+            if(!res.ok){
+                dispatch(updateFailure(data.message || "Update failed"));
+                return;
+            }
+            dispatch(updateSuccess(data));
+            setUpdateSuccessful(true);
         } catch (error) {
             console.log(error)
+            dispatch(updateFailure(error.message || "Update failed"));
+            setUpdateSuccessful(false);
         }
     }
     const handleChange = (e)=>{
@@ -145,6 +154,9 @@ return (
             <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-centern cursor-pointer'>
             {loading ? "Updating..." : "Update"}
             </button>
+            {updateSuccessful && <p className='text-green-700 text-sm text-center mt-2'>
+                Profile updated successfully!
+            </p>}
             {error && <p className='text-red-500 text-sm text-center mt-2'>
                 {error}
             </p>}
