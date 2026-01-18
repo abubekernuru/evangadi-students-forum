@@ -1,7 +1,7 @@
 import {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateStart, updateSuccess, updateFailure } from '../redux/userSlice.js';
+import { updateStart, updateSuccess, updateFailure,deleteUserSuccess, deleteUserFailer } from '../redux/userSlice.js';
 
 function Profile() {
     const {currentUser, loading, error} = useSelector((state)=>state.user);
@@ -89,6 +89,26 @@ function Profile() {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     }
     }
+
+    const handleDelete = async () => {
+        try {
+            const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                method: 'DELETE'
+            })
+            const data = await res.json();
+            if(!res.ok){
+                dispatch(deleteUserFailer(data.message || "Delete failed"));
+                return;
+            }
+            dispatch(deleteUserSuccess(data));
+        } catch (error) {
+            console.log(error)
+            dispatch(deleteUserFailer(error.message || "Delete failed"));
+        }
+    }
+    // const handleSignout = ()=>{
+
+    // }
 return (
     <div className='flex flex-col bg-white p-10 m-5 shadow-xl max-w-lg mx-auto rounded-lg'>      
         <h2 className='text-xl font-bold mb-3 text-center text-gray-800'>Update Profile</h2>
@@ -155,7 +175,7 @@ return (
                 id='password'
                 onChange={(e)=>handleChange(e)}
             />
-            <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-centern cursor-pointer'>
+            <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-center cursor-pointer'>
             {loading ? "Updating..." : "Update"}
             </button>
             {updateSuccessful && <p className='text-green-700 text-sm text-center mt-2'>
@@ -165,6 +185,11 @@ return (
                 {error}
             </p>}
         </form>
+        <div className='flex justify-between mt-6 text-sm text-red-500 p-3 
+        '>
+            <div onClick={handleDelete} className='hover:underline cursor-pointer'>Delete Account</div>
+            <div className='hover:underline cursor-pointer'>Signout</div>
+        </div>
     </div>
     );
 }
