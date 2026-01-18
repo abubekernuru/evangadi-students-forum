@@ -1,6 +1,8 @@
 import {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { }
 
 function Profile() {
     const {currentUser, loading, error} = useSelector((state)=>state.user);
@@ -8,6 +10,7 @@ function Profile() {
     const [formData, setFormData] = useState({});
     const [imageUploading, setImageUploading] = useState(false);
     const [localPreview, setLocalPreview] = useState(null);
+    const dispatch = useDispatch();
 
     // image Upload functionality
     const uploadImage = async (file) => {
@@ -140,8 +143,7 @@ return (
                 onChange={(e)=>handleChange(e)}
             />
             <button type='submit' className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-centern cursor-pointer'>
-            {/* {loading ? "Updating..." : "Update"} */}
-                Update
+            {loading ? "Updating..." : "Update"}
             </button>
             {error && <p className='text-red-500 text-sm text-center mt-2'>
                 {error}

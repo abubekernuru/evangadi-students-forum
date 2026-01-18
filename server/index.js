@@ -25,10 +25,10 @@ app.get('/', (req, res)=> {
     res.json({msg: "Hello Abuki"})
 })
 // router
-// const userRoute = require('./routes/user.routes.js');
+const userRoute = require('./routes/user.routes.js');
 const authRoute = require('./routes/auth.routes.js');
 
-// app.use('/api/user', userRoute)
+app.use('/api/user', userRoute)
 app.use('/api/auth', authRoute)
 
 // error handler middleware
