@@ -32,7 +32,7 @@ function SignIn({switchToSignUp}) {
           return
         }
         dispatch(signInSuccess(data))
-        localStorage.setItem('token', data.token);
+        // localStorage.setItem('token', data.token);
         navigate('/home')
     } catch (error) {
       dispatch(signInFailure(error.message))

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { signup, signin, google } = require('../controllers/auth.controller.js');
 const {checkUser} = require('../controllers/user.controllers.js');
-const {authMiddleware} = require('../middleware/authMiddleware.js')
+const {authMiddleware} = require('../middleware/auth.middleware.js')
 
 router.post('/signup', signup)
 router.post('/signin', signin)

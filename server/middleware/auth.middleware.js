@@ -18,7 +18,6 @@ const authMiddleware = async (req, res, next) => {
             username: data.username, 
             id: data.id 
         }; 
-
         next(); 
     } catch (error) {
         return res.status(401).json({ message: "Authentication invalid" });
