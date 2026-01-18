@@ -43,18 +43,17 @@ function Profile() {
         }
     }
 
-    // image change handler
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if(!file) return;
         // For local preview
-        const previewUrl = URL.createObjectURL(file);
-        setLocalPreview(previewUrl);
+        // const previewUrl = URL.createObjectURL(file);
+        // setLocalPreview(previewUrl);
         // Upload to cloudinary
         const imageUrl = await uploadImage(file);
         setFormData({...formData, avatar: imageUrl});   
         // Free up memory
-        URL.revokeObjectURL(file);
+        // URL.revokeObjectURL(file);
     };
 
     const handleSubmit = async (e)=> {
@@ -83,7 +82,12 @@ function Profile() {
         }
     }
     const handleChange = (e)=>{
-        setFormData({...formData, [e.target.id]: e.target.value});
+        if (e.target.value === "") {
+        const { [e.target.id]: removed, ...rest } = formData;
+        setFormData(rest);
+    } else {
+        setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
     }
 return (
     <div className='flex flex-col bg-white p-10 m-5 shadow-xl max-w-lg mx-auto rounded-lg'>      
@@ -97,7 +101,7 @@ return (
                 onChange={handleImageChange}
             />
             <img
-                src={localPreview || formData.avatar || currentUser.avatar} 
+                src={formData.avatar || currentUser.avatar} 
                 alt="profile-picture" 
                 className="h-20 w-20 rounded-full object-cover mx-auto cursor-pointer mb-3" 
                 onClick={()=>fileInputRef.current.click()}

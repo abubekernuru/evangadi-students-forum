@@ -31,7 +31,8 @@ const updateUser = async (req, res, next) => {
                 username: req.body.username,
                 password: req.body.password,
                 firstName: req.body.firstName,
-                lastName: req.body.lastName
+                lastName: req.body.lastName,
+                avatar: req.body.avatar
             }
         }, { new: true}
         )
