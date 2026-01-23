@@ -90,6 +90,7 @@ function Profile() {
     }
     }
 
+    // handle delete function
     const handleDelete = async () => {
         try {
             const res = await fetch(`/api/user/delete/${currentUser._id}`, {
@@ -106,6 +107,7 @@ function Profile() {
             dispatch(deleteUserFailer(error.message || "Delete failed"));
         }
     }
+    // handle signout function
     // const handleSignout = ()=>{
 
     // }
