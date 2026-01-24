@@ -87,11 +87,7 @@ const google = async (req, res, next) => {
     }
 }
 
-const signout = async (req, res, next) => {
-    if(req.user.id !== req.params.id) {
-        return next(errorHandler(401, "You can logout only your account"));
-    }
-    try {
+const signout = async (req, res, next) => {try {
         res
         .clearCookie("access_token")
         .status(200)

@@ -1,7 +1,7 @@
 import {useRef, useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateStart, updateSuccess, updateFailure,deleteUserSuccess, deleteUserFailer } from '../redux/userSlice.js';
+import { updateStart, updateSuccess, updateFailure,deleteUserSuccess, deleteUserFailer, signOutSuccess } from '../redux/userSlice.js';
 
 function Profile() {
     const {currentUser, loading, error} = useSelector((state)=>state.user);
@@ -108,9 +108,19 @@ function Profile() {
         }
     }
     // handle signout function
-    // const handleSignout = ()=>{
-
-    // }
+    const handleSignout = async ()=>{
+        try {
+            const res = await fetch("/api/auth/signout");
+            const data = await res.json();
+            if(!res.ok){
+                console.log(data.message || "Signout failed");
+                return;
+            }
+            dispatch(signOutSuccess());
+        } catch (error) {
+            console.log(error)
+        }
+    }
 return (
     <div className='flex flex-col bg-white p-10 m-5 shadow-xl max-w-lg mx-auto rounded-lg'>      
         <h2 className='text-xl font-bold mb-3 text-center text-gray-800'>Update Profile</h2>
@@ -190,7 +200,7 @@ return (
         <div className='flex justify-between mt-6 text-sm text-red-500 p-3 
         '>
             <div onClick={handleDelete} className='hover:underline cursor-pointer'>Delete Account</div>
-            <div className='hover:underline cursor-pointer'>Signout</div>
+            <div onClick={handleSignout} className='hover:underline cursor-pointer'>Signout</div>
         </div>
     </div>
     );
