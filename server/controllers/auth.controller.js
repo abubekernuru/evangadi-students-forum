@@ -87,4 +87,18 @@ const google = async (req, res, next) => {
     }
 }
 
-module.exports = {signup, signin, google}
+const signout = async (req, res, next) => {
+    if(req.user.id !== req.params.id) {
+        return next(errorHandler(401, "You can logout only your account"));
+    }
+    try {
+        res
+        .clearCookie("access_token")
+        .status(200)
+        .json("User logged out succefully!")
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {signup, signin, google, signout}
