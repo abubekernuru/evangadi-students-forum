@@ -8,7 +8,7 @@ function Profile() {
     const fileInputRef = useRef(null);
     const [formData, setFormData] = useState({});
     const [imageUploading, setImageUploading] = useState(false);
-    const [localPreview, setLocalPreview] = useState(null);
+    // const [localPreview, setLocalPreview] = useState(null);
     const [updateSuccessful, setUpdateSuccessful] = useState(false);
     const dispatch = useDispatch();
 
