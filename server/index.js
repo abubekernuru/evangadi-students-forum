@@ -27,9 +27,11 @@ app.get('/', (req, res)=> {
 // router
 const userRoute = require('./routes/user.routes.js');
 const authRoute = require('./routes/auth.routes.js');
+const questionRoute = require('./routes/question.routes.js');
 
 app.use('/api/user', userRoute)
 app.use('/api/auth', authRoute)
+app.use('/api/question', questionRoute)
 
 // error handler middleware
 app.use((err, req, res, next)=>{

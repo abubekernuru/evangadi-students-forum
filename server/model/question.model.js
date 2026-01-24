@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const questionSchema  = new mongoose.Schema({
     title: {
         type: String,
-        required
+        required: true
     },
     content: {
         type: String,
-        required
+        required: true
     },
     userRef: {
         type: String,
-        required
+        required: true
     }
 }, {timestamps: true});
 
