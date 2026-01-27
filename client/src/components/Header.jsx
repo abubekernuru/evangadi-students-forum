@@ -18,6 +18,11 @@ function Header() {
                 <Link to={'/about'}>
                     <li className='py-2 hover:underline'>About</li>
                 </Link>
+                {currentUser && (
+                    <Link to={'/askquestion'} className='py-2'>
+                        <li className='p-1 bg-green-600 text-white rounded-md shadow-green-200 shadow-md hover:opacity-95 text-sm'>Ask Question</li>
+                    </Link>
+                )}
                 {currentUser ? (
                     <Link to={'/profile'}>
                         <li className='py-2 hover:underline'>
@@ -26,7 +31,7 @@ function Header() {
                     </Link>
                 ) : 
                 <Link to={'/'}>
-                    <li className='px-2 py-2 bg-blue-600 text-white rounded-lg shadow-blue-200 shadow-lg'>Sign in</li>
+                    <li className='px-2 py-2 bg-blue-600 text-white rounded-lg shadow-blue-200 shadow-lg hover:opacity-95'>Sign in</li>
                 </Link>
                 }
             </ul>
