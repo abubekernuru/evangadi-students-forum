@@ -1,20 +1,63 @@
-import React from 'react'
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 function AsqQuestion() {
+  const [formData, setFormData] = useState({});
+  const {error, loading, currentUser} = useSelector((state)=>state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/question/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...formData, userRef: currentUser._id })
+      })
+      const data = await res.json();
+      if (data.success === false) {
+      return;
+    }
+      navigate('/home')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleChange = (e)=> {
+    setFormData({...formData, [e.target.id]: e.target.value})
+  }
+  console.log(formData)
   return (
     <div className='flex flex-col md:flex-row gap-10 md:gap-20 px-5 md:px-20 py-10'>
       <div className='p-5 w-full'>
         <h1 className='font-extrabold text-gray-800 mb-6 text-3xl text-center'>Ask a public question</h1>
-        <form className='flex flex-col gap-5'>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-5'>
           <div className='flex flex-col gap-1 '>
             <label htmlFor="questionTitle" className='font-semibold text-gray-700'>Title</label>
             <p className='text-xs text-gray-500 mb-1'>Be specific and imagine you’re asking a question to another person.</p>
-            <input type="text" className='border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all' id='questionTitle' placeholder='e.g. How do I use Redux Persist with cookies?'/>
+            <input 
+              type="text" 
+              className='border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all' id='title' 
+              placeholder='e.g. How do I use Redux Persist with cookies?'
+              onChange={(e)=>handleChange(e)}
+              />
           </div>
           <div className='flex flex-col gap-1'>
             <label htmlFor="questionDetails" className='font-semibold text-gray-700'>Details </label>
             <p className='text-xs text-gray-500 mb-1'>Include all the information someone would need to answer your question.</p>
-            <textarea type="text" id='questionDetails' placeholder='Explain your problem here...' rows={6} className='border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all'></textarea>
+            <textarea 
+              type="text" 
+              id='content' 
+              placeholder='Explain your problem here...' 
+              rows={6} 
+              className='border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all'
+              onChange={(e)=>handleChange(e)}
+              ></textarea>
           </div>
           <button type="submit" className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-center cursor-pointer'>Submit Question</button>
         </form>
