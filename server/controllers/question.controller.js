@@ -7,4 +7,14 @@ const createQuestion = async (req, res, next) => {
     res.status(200).json(newQuestion)
 }
 
-module.exports = { createQuestion }
+const getQuestion = async (req, res, next) => {
+    const question = await Question.findById(req.params.id)
+        .populate('userRef', 'username avatar');
+
+    if(!question){
+        return res.status(404).json({message: 'Question not found'});
+    }
+    res.status(200).json(question);
+}
+
+module.exports = { createQuestion, getQuestion }

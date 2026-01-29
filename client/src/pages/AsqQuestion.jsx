@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 
 function AsqQuestion() {
   const [formData, setFormData] = useState({});
-  const {error, loading, currentUser} = useSelector((state)=>state.user);
-  const dispatch = useDispatch();
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState(null);
+  const {currentUser} = useSelector((state)=>state.user);
+
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setFormLoading(true);
       const res = await fetch(`/api/question/`, {
         method: 'POST',
         headers: {
@@ -21,11 +25,16 @@ function AsqQuestion() {
       })
       const data = await res.json();
       if (data.success === false) {
+        setFormError(data.message);
+        setFormLoading(false);
       return;
     }
       navigate('/home')
+      setFormLoading(false);
     } catch (error) {
       console.log(error)
+      setFormError('An error occurred. Please try again.', error);
+      setFormLoading(false);
     }
   }
   const handleChange = (e)=> {
@@ -59,7 +68,8 @@ function AsqQuestion() {
               onChange={(e)=>handleChange(e)}
               ></textarea>
           </div>
-          <button type="submit" className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-center cursor-pointer'>Submit Question</button>
+          <button type="submit" className='bg-blue-600 text-white py-3 rounded-md font-semibold hover:opacity-95 transition-colors mt-2 text-center cursor-pointer'>{formLoading ? 'Posting...' : 'Post Your Question'}</button>
+          {formError && <p className='text-red-500 text-sm mt-2'>{formError}</p>}
         </form>
       </div>
       <div className=' bg-yellow-50 border border-yellow-200 rounded-lg p-6 shadow-sm m-4'>
