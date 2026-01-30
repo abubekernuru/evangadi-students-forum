@@ -29,10 +29,10 @@ function AsqQuestion() {
         setFormLoading(false);
       return;
     }
-      navigate('/home')
+      navigate('/qdetailanda')
       setFormLoading(false);
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       setFormError('An error occurred. Please try again.', error);
       setFormLoading(false);
     }
@@ -40,7 +40,7 @@ function AsqQuestion() {
   const handleChange = (e)=> {
     setFormData({...formData, [e.target.id]: e.target.value})
   }
-  console.log(formData)
+  // console.log(formData)
   return (
     <div className='flex flex-col md:flex-row gap-10 md:gap-20 px-5 md:px-20 py-10'>
       <div className='p-5 w-full'>
