@@ -29,7 +29,7 @@ function AsqQuestion() {
         setFormLoading(false);
       return;
     }
-      navigate('/qdetailanda')
+      navigate(`/qdetailanda/${data._id}`)
       setFormLoading(false);
     } catch (error) {
       // console.log(error)

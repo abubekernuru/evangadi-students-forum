@@ -1,31 +1,55 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 
 function QdetailandA() {
+  const [askerData, setAskerData] = useState(null);
+  const params = useParams();
+
+  useEffect(()=>{
+    const fetchQuestion = async () =>{
+      try {
+        const res = await fetch(`/api/question/${params.id}`);
+        const data = await res.json();
+        if(data.success === false){
+          return
+        }
+        console.log(data)
+        setAskerData(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchQuestion();
+    
+  },[params.id])
+  console.log(askerData)
+  if (!askerData) return <div className='p-10 text-center'>Loading...</div>;
   return (
     <div className="max-w-4xl mx-auto p-6 flex flex-col gap-8">
       
       {/* --- QUESTION SECTION --- */}
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold text-gray-800 border-b pb-4">
-          How do I use Redux Persist with cookies? {/* This will be {question.title} */}
+          {askerData?.title}
         </h1>
         
         <div className="flex gap-6 items-start">
           {/* Author Sidebar */}
-          <div className="flex flex-col items-center gap-1 min-w-[80px]">
+          <div className="flex flex-col items-center gap-1 min-w-20">
             <img 
-              src="https://via.placeholder.com/500" 
+              src={askerData?.userRef?.avatar} 
               alt="profile" 
               className="w-12 h-12 rounded-full object-cover border-2 border-blue-500"
             />
-            <span className="text-xs font-medium text-blue-600">username</span>
+            <span className="text-xs font-medium text-blue-600">{askerData?.userRef?.username}</span>
           </div>
 
           {/* Question Body */}
           <div className="flex-1">
             <p className="text-gray-700 leading-relaxed text-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, numquam! 
-              {/* This will be {question.content} */}
+              {askerData?.content}
             </p>
           </div>
         </div>
