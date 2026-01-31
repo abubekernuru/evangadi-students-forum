@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 
 function QdetailandA() {
   const [askerData, setAskerData] = useState(null);
-  const [answerContent, setAnswerContent] = useState(null)
+  const [postanswerContent, setpostAnswerContent] = useState(null)
+  const [answerData, setAnswerData] = useState([]);
+  const {currentUser} = useSelector((state)=>state.user);
   const params = useParams();
 
   useEffect(()=>{
@@ -24,7 +27,19 @@ function QdetailandA() {
     }
     fetchQuestion();
 
-    // const fetchAnswer = async () =>
+    const fetchAnswer = async () => {
+      try {
+        const res = await fetch(`/api/answer/${params.id}`)
+        const data = await res.json();
+        if(data.success === false){
+          return;
+        }
+        setAnswerData(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchAnswer();
     
   },[params.id])
   
@@ -36,20 +51,28 @@ function QdetailandA() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(answerContent)
+        body: JSON.stringify(postanswerContent)
       })
       const data = await res.json();
       if(data.success === false){
         return;
       }
-      setAnswerContent( {content:""})
+      const postWithUserInfo = {
+        ...data,
+        userRef: {
+          username: currentUser.username,
+          avatar: currentUser.avatar
+        }
+      }
+      setAnswerData([...answerData, postWithUserInfo])
+      setpostAnswerContent( {content:""})
     } catch (error) {
       console.log(error)
     }
   }
-  // console.log(answerContent)
+  // console.log(postanswerContent)
   const handleChange = (e)=>{
-    setAnswerContent({...answerContent, content: e.target.value})
+    setpostAnswerContent({...postanswerContent, content: e.target.value})
   }
 
   if (!askerData) return <div className='p-10 text-center'>Loading...</div>;
@@ -89,12 +112,22 @@ function QdetailandA() {
         </h2>
         
         {/* Mock Answer Item */}
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4">
-          <p className="text-gray-600">This is a sample answer. Once you have real data, you will .map() through them here!</p>
+        {answerData?.length === 0 ?
+          <p className="text-gray-500 italic">Be the first to answer this question!</p> : answerData.map((answer)=>(
+          <div key={answer._id} className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4 flex gap-6">
+            <div className='flex flex-col justify-center align-middle'>
+              <img src={answer.userRef.avatar} alt="profile"
+                className='w-8 h-8 rounded-full object-cover border border-blue-400'
+              />
+              <span className='text-xs text-gray-500 text-center'>{answer.userRef.username}</span>
+            </div>
+            <div className='flex-1'>
+          <p className="text-gray-600">{answer.content}</p>
           <div className="flex justify-end mt-2 text-xs text-gray-400 italic">
-            Answered by Sarah - 2 hours ago
+            {` ${new Date(answer.createdAt).toLocaleString()}`}
           </div>
-        </div>
+            </div>
+        </div>))}
       </div>
 
       {/* --- POST ANSWER SECTION --- */}
@@ -105,7 +138,7 @@ function QdetailandA() {
             placeholder="Write your solution here..." 
             rows={6}
             onChange={(e)=>handleChange(e)}
-            value={answerContent?.content || ""}
+            value={postanswerContent?.content || ""}
             className="w-full border border-gray-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
           ></textarea>
           <button 
