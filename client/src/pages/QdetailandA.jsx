@@ -23,6 +23,8 @@ function QdetailandA() {
       }
     }
     fetchQuestion();
+
+    // const fetchAnswer = async () =>
     
   },[params.id])
   
@@ -40,6 +42,7 @@ function QdetailandA() {
       if(data.success === false){
         return;
       }
+      setAnswerContent( {content:""})
     } catch (error) {
       console.log(error)
     }
@@ -102,6 +105,7 @@ function QdetailandA() {
             placeholder="Write your solution here..." 
             rows={6}
             onChange={(e)=>handleChange(e)}
+            value={answerContent?.content || ""}
             className="w-full border border-gray-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
           ></textarea>
           <button 

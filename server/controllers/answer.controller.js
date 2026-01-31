@@ -15,4 +15,14 @@ const postAnswer = async(req, res, next)=>{
     }
 }
 
-module.exports = postAnswer;
+const getAnswer = async(req, res, next)=>{
+    try {
+        const findAnswer = await Answer.find({questionRef: req.params.id})
+            .populate("userRef", "username avatar")
+        res.status(200).json(findAnswer)
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {postAnswer, getAnswer};
