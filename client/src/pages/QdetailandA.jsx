@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 function QdetailandA() {
   const [askerData, setAskerData] = useState(null);
+  const [answerContent, setAnswerContent] = useState(null)
   const params = useParams();
 
   useEffect(()=>{
@@ -24,7 +25,30 @@ function QdetailandA() {
     fetchQuestion();
     
   },[params.id])
-  // console.log(askerData)
+  
+  const handleSubmit = async(e)=> {
+    e.preventDefault();
+    try {
+      const res = await fetch(`/api/answer/${params.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(answerContent)
+      })
+      const data = await res.json();
+      if(data.success === false){
+        return;
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  // console.log(answerContent)
+  const handleChange = (e)=>{
+    setAnswerContent({...answerContent, content: e.target.value})
+  }
+
   if (!askerData) return <div className='p-10 text-center'>Loading...</div>;
   return (
     <div className="max-w-4xl mx-auto p-6 flex flex-col gap-8">
@@ -73,10 +97,11 @@ function QdetailandA() {
       {/* --- POST ANSWER SECTION --- */}
       <div className="bg-white border-t pt-8 flex flex-col gap-4">
         <h2 className="text-xl font-bold text-gray-800">Your Answer</h2>
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <textarea 
             placeholder="Write your solution here..." 
             rows={6}
+            onChange={(e)=>handleChange(e)}
             className="w-full border border-gray-300 rounded-lg p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
           ></textarea>
           <button 
