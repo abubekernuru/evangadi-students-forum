@@ -15,7 +15,7 @@ function QdetailandA() {
         if(data.success === false){
           return
         }
-        console.log(data)
+        // console.log(data)
         setAskerData(data)
       } catch (error) {
         console.log(error)
@@ -24,7 +24,7 @@ function QdetailandA() {
     fetchQuestion();
     
   },[params.id])
-  console.log(askerData)
+  // console.log(askerData)
   if (!askerData) return <div className='p-10 text-center'>Loading...</div>;
   return (
     <div className="max-w-4xl mx-auto p-6 flex flex-col gap-8">
