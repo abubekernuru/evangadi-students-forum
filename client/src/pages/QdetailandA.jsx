@@ -19,7 +19,6 @@ function QdetailandA() {
         if(data.success === false){
           return
         }
-        // console.log(data)
         setAskerData(data)
       } catch (error) {
         console.log(error)
