@@ -6,6 +6,10 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+app.use(cors({
+    origin: process.env.Frontend_URL,
+    credentials: true,
+}))
 
 
 mongoose.connect(process.env.MongoURI)
@@ -20,10 +24,6 @@ mongoose.connect(process.env.MongoURI)
     })
 
 app.use(express.json());
-app.use(cors({
-    origin: process.env.Frontend_URL,
-    credentials: true,
-}))
 
 // test api route
 app.get('/', (req, res)=> {
