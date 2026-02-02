@@ -33,6 +33,7 @@ function Profile() {
             setImageUploading(true);
             const res = await fetch("https://api.cloudinary.com/v1_1/dv8q3oyfj/image/upload", {
                 method: "POST",
+                credentials: 'include', // added for deployment cors error
                 body: data
             });
             const json = await res.json();
@@ -68,6 +69,7 @@ function Profile() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include', // added for deployment cors error
                 body: JSON.stringify(formData)
             });
             const data = await res.json();
@@ -96,7 +98,8 @@ function Profile() {
     const handleDelete = async () => {
         try {
             const res = await fetch(`${baseUrl}/api/user/delete/${currentUser._id}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                credentials: 'include' // added for deployment cors error
             })
             const data = await res.json();
             if(!res.ok){
@@ -112,7 +115,9 @@ function Profile() {
     // handle signout function
     const handleSignout = async ()=>{
         try {
-            const res = await fetch(`${baseUrl}/api/auth/signout`);
+            const res = await fetch(`${baseUrl}/api/auth/signout`, {
+                credentials: 'include', // added for deployment cors error
+            });
             const data = await res.json();
             if(!res.ok){
                 console.log(data.message || "Signout failed");

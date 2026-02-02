@@ -23,6 +23,7 @@ function AsqQuestion() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // added for deployment cors error
         body: JSON.stringify({ ...formData, userRef: currentUser._id })
       })
       const data = await res.json();

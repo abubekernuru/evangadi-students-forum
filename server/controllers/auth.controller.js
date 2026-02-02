@@ -24,8 +24,8 @@ const signup = async (req, res, next) => {
         res
             .cookie('access_token', token, {
                 httpOnly: true,
-                secure: true,    // added for deployment cors failure
-                sameSite: 'none', // added for deployment cors failure
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
                 expires: expiryDate
             })
             .status(200)
@@ -73,7 +73,9 @@ const google = async (req, res, next) => {
             const {password: pass, ...rest} = user._doc;
             const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
             res
-                .cookie('access_token', token, { httpOnly: true, expires: expiryDate})
+                .cookie('access_token', token, {
+                    httpOnly: true,
+                    expires: expiryDate})
                 .status(200)
                 .json(rest);
         }else {
@@ -92,9 +94,8 @@ const google = async (req, res, next) => {
             const {password: pass, ...rest} = newUser._doc;
             const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
             res
-                .cookie('access_token', token, { httpOnly: true, 
-                    secure: true,    // added for deployment cors failure
-                    sameSite: 'none', // added for deployment cors failure
+                .cookie('access_token', token, { 
+                    httpOnly: true,
                     expires: expiryDate})
                 .status(201)
                 .json(rest);

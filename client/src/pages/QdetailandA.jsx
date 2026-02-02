@@ -58,6 +58,7 @@ function QdetailandA() {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'include', // added for deployment cors error
         body: JSON.stringify(postanswerContent)
       })
       const data = await res.json();
