@@ -12,6 +12,8 @@ function Profile() {
     const [updateSuccessful, setUpdateSuccessful] = useState(false);
     const dispatch = useDispatch();
 
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
     // image Upload functionality
     const uploadImage = async (file) => {
         const data = new FormData();
@@ -61,7 +63,7 @@ function Profile() {
         try {
             dispatch(updateStart());
             setUpdateSuccessful(false);
-            const res = await fetch(`/api/user/update/${currentUser._id}`, {
+            const res = await fetch(`${baseUrl}/api/user/update/${currentUser._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -93,7 +95,7 @@ function Profile() {
     // handle delete function
     const handleDelete = async () => {
         try {
-            const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+            const res = await fetch(`${baseUrl}/api/user/delete/${currentUser._id}`, {
                 method: 'DELETE'
             })
             const data = await res.json();
@@ -110,7 +112,7 @@ function Profile() {
     // handle signout function
     const handleSignout = async ()=>{
         try {
-            const res = await fetch("/api/auth/signout");
+            const res = await fetch(`${baseUrl}/api/auth/signout`);
             const data = await res.json();
             if(!res.ok){
                 console.log(data.message || "Signout failed");

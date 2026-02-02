@@ -11,11 +11,13 @@ function QdetailandA() {
   const {currentUser} = useSelector((state)=>state.user);
   const params = useParams();
 
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(()=>{
     if (!params.id) return;
     const fetchQuestion = async () =>{
       try {
-        const res = await fetch(`/api/question/${params.id}`);
+        const res = await fetch(`${baseUrl}/api/question/${params.id}`);
         const data = await res.json();
         if(data.success === false){
           return
@@ -29,7 +31,7 @@ function QdetailandA() {
 
     const fetchAnswer = async () => {
       try {
-        const res = await fetch(`/api/answer/${params.id}`)
+        const res = await fetch(`${baseUrl}/api/answer/${params.id}`)
         const data = await res.json();
         if(data.success === false){
           return;
@@ -51,7 +53,7 @@ function QdetailandA() {
   const handleSubmit = async(e)=> {
     e.preventDefault();
     try {
-      const res = await fetch(`/api/answer/${params.id}`, {
+      const res = await fetch(`${baseUrl}/api/answer/${params.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

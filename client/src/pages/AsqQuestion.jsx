@@ -12,11 +12,13 @@ function AsqQuestion() {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setFormLoading(true);
-      const res = await fetch(`/api/question/`, {
+      const res = await fetch(`${baseUrl}/api/question/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

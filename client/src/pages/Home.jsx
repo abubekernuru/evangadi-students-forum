@@ -6,12 +6,14 @@ import { useEffect, useState } from 'react';
 function Home() {
   const {currentUser} = useSelector((state)=>state.user);
   const [questionData, setQuestionData] = useState([]);
+
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
   useEffect(()=>{
     const getAllQuestions = async ()=>{
       try {
-        const res = await fetch('/api/question/')
+        const res = await fetch(`${baseUrl}/api/question/`)
         const data = await res.json()
-        if(data.sucess===false){
+        if(data.success===false){
           return;
         }
         setQuestionData(data)
