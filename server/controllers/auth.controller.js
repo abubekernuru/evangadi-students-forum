@@ -53,8 +53,8 @@ const signin = async (req, res, next) => {
         res
             .cookie('access_token', token, {
                 httpOnly: true,
-                secure: true,    // added for deployment cors failure
-                sameSite: 'none', // added for deployment cors failure
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
                 expires: expiryDate
             })
             .status(200)
