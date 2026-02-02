@@ -75,7 +75,10 @@ const google = async (req, res, next) => {
             res
                 .cookie('access_token', token, {
                     httpOnly: true,
-                    expires: expiryDate})
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                    expires: expiryDate
+                })
                 .status(200)
                 .json(rest);
         }else {

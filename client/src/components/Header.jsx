@@ -7,7 +7,7 @@ import { signOutSuccess } from '../redux/userSlice'
 function Header() {
     const currentUser = useSelector((state) => state.user.currentUser);
     const dispatch = useDispatch();
-    const baseURL = import.meta.env.VITE_API_BASE_URL;
+    const baseURL = import.meta.env.VITE_API_BASE_URL || '';
         const handleSignout = async ()=>{
             try {
                 const res = await fetch(`${baseURL}/api/auth/signout`);

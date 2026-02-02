@@ -11,7 +11,7 @@ function QdetailandA() {
   const {currentUser} = useSelector((state)=>state.user);
   const params = useParams();
 
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
 
   useEffect(()=>{
     if (!params.id) return;

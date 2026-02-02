@@ -12,7 +12,7 @@ function Profile() {
     const [updateSuccessful, setUpdateSuccessful] = useState(false);
     const dispatch = useDispatch();
 
-    const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
 
     // image Upload functionality
     const uploadImage = async (file) => {
@@ -33,7 +33,6 @@ function Profile() {
             setImageUploading(true);
             const res = await fetch("https://api.cloudinary.com/v1_1/dv8q3oyfj/image/upload", {
                 method: "POST",
-                credentials: 'include', // added for deployment cors error
                 body: data
             });
             const json = await res.json();
@@ -69,7 +68,6 @@ function Profile() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include', // added for deployment cors error
                 body: JSON.stringify(formData)
             });
             const data = await res.json();

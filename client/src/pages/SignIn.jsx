@@ -15,7 +15,7 @@ function SignIn({switchToSignUp}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -7,7 +7,7 @@ function Home() {
   const {currentUser} = useSelector((state)=>state.user);
   const [questionData, setQuestionData] = useState([]);
 
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
   useEffect(()=>{
     const getAllQuestions = async ()=>{
       try {

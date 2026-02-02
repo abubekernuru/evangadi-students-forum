@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 function OAuth() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const baseURL = import.meta.env.VITE_API_BASE_URL;
+    const baseURL = import.meta.env.VITE_API_BASE_URL || '';
 
     const handleGoogleClick = async () => {
         try {
