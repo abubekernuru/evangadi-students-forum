@@ -8,33 +8,33 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 // deployment error fix code
-const FRONTEND_URL = (process.env.FRONTEND_URL || '').replace(/\/$/, '');
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || FRONTEND_URL || 'http://localhost:5173')
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
+// const FRONTEND_URL = (process.env.FRONTEND_URL || '').replace(/\/$/, '');
+// const allowedOrigins = (process.env.ALLOWED_ORIGINS || FRONTEND_URL || 'http://localhost:5173')
+//     .split(',')
+//     .map(s => s.trim())
+//     .filter(Boolean);
 
-app.use(cors({
-    origin: (origin, callback) => {
-    // allow non-browser (curl, mobile) requests
-    if (!origin) return callback(null, true);
-
-    const isWhitelisted = allowedOrigins.includes(origin);
-    const isVercelPreview = origin && origin.endsWith('.vercel.app'); // optional
-
-    if (isWhitelisted || isVercelPreview) return callback(null, true);
-
-    console.warn('[CORS] Blocked origin:', origin);
-    return callback(new Error('Not allowed by CORS'));
-    },
-    methods: ['GET','POST','PUT','DELETE','PATCH','OPTIONS'],
-    allowedHeaders: ['Content-Type','Authorization'],
-    credentials: true
-}));
 // app.use(cors({
-//     origin: process.env.Frontend_URL,
-//     credentials: true,
-// }))
+//     origin: (origin, callback) => {
+//     // allow non-browser (curl, mobile) requests
+//     if (!origin) return callback(null, true);
+
+//     const isWhitelisted = allowedOrigins.includes(origin);
+//     const isVercelPreview = origin && origin.endsWith('.vercel.app'); // optional
+
+//     if (isWhitelisted || isVercelPreview) return callback(null, true);
+
+//     console.warn('[CORS] Blocked origin:', origin);
+//     return callback(new Error('Not allowed by CORS'));
+//     },
+//     methods: ['GET','POST','PUT','DELETE','PATCH','OPTIONS'],
+//     allowedHeaders: ['Content-Type','Authorization'],
+//     credentials: true
+// }));
+app.use(cors({
+    origin: process.env.Frontend_URL,
+    credentials: true,
+}))
 
 
 mongoose.connect(process.env.MongoURI)
