@@ -29,7 +29,7 @@ function OAuth() {
             })
             const data = await res.json();
             dispatch(signInSuccess(data));
-            navigate('/home');
+            navigate('/');
         } catch (error) {
             console.log(error)
         }
