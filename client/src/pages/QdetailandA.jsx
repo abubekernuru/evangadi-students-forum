@@ -12,6 +12,7 @@ function QdetailandA() {
   const params = useParams();
 
   useEffect(()=>{
+    if (!params.id) return;
     const fetchQuestion = async () =>{
       try {
         const res = await fetch(`/api/question/${params.id}`);
@@ -33,7 +34,12 @@ function QdetailandA() {
         if(data.success === false){
           return;
         }
-        setAnswerData(data)
+        // setAnswerData(data)
+        if (Array.isArray(data)) {
+          setAnswerData(data);
+        } else {
+          setAnswerData([]);
+        }
       } catch (error) {
         console.log(error)
       }
@@ -114,11 +120,11 @@ function QdetailandA() {
         {answerData?.length === 0 ?
           <p className="text-gray-500 italic">Be the first to answer this question!</p> : answerData.map((answer)=>(
           <div key={answer._id} className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4 flex gap-6">
-            <div className='flex flex-col justify-center align-middle'>
-              <img src={answer.userRef.avatar} alt="profile"
+            <div className='flex flex-col justify-center items-center'>
+              <img src={answer.userRef?.avatar} alt="profile"
                 className='w-8 h-8 rounded-full object-cover border border-blue-400'
               />
-              <span className='text-xs text-gray-500 text-center'>{answer.userRef.username}</span>
+              <span className='text-xs text-gray-500 text-center'>{answer.userRef?.username}</span>
             </div>
             <div className='flex-1'>
           <p className="text-gray-600">{answer.content}</p>

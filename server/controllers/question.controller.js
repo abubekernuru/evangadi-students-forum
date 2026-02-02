@@ -26,4 +26,13 @@ const getQuestion = async (req, res, next) => {
     }
 }
 
-module.exports = { createQuestion, getQuestion }
+const getAllQuestions = async (req, res, next) => {
+    try {
+        const allQuestions = await Question.find().populate('userRef').sort({createdAt: -1});
+        res.status(200).json(allQuestions);
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = { createQuestion, getQuestion, getAllQuestions }
