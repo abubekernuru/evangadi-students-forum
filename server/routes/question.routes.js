@@ -5,7 +5,7 @@ const { createQuestion, getQuestion, getAllQuestions } = require("../controllers
 const router = express.Router();
 
 router.post('/', authMiddleware, createQuestion);
-router.get('/:id', authMiddleware, getQuestion);
+router.get('/:id', getQuestion);
 router.get('/', getAllQuestions)
 
 
