@@ -51,6 +51,8 @@ const signin = async (req, res, next) => {
         res
             .cookie('access_token', token, {
                 httpOnly: true,
+                secure: true,    // added for deployment cors failure
+                sameSite: 'none', // added for deployment cors failure
                 expires: expiryDate
             })
             .status(200)
@@ -88,7 +90,10 @@ const google = async (req, res, next) => {
             const {password: pass, ...rest} = newUser._doc;
             const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
             res
-                .cookie('access_token', token, { httpOnly: true, expires: expiryDate})
+                .cookie('access_token', token, { httpOnly: true, 
+                    secure: true,    // added for deployment cors failure
+                    sameSite: 'none', // added for deployment cors failure
+                    expires: expiryDate})
                 .status(201)
                 .json(rest);
         }
