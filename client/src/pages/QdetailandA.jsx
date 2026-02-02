@@ -136,7 +136,7 @@ function QdetailandA() {
       </div>
 
       {/* --- POST ANSWER SECTION --- */}
-      <div className="bg-white border-t pt-8 flex flex-col gap-4">
+      {currentUser?<div className="bg-white border-t pt-8 flex flex-col gap-4">
         <h2 className="text-xl font-bold text-gray-800">Your Answer</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <textarea 
@@ -160,7 +160,11 @@ function QdetailandA() {
             Browse other questions or ask your own.
           </Link>
         </div>
-      </div>
+      </div>:
+        <div className='text-lg '>
+          Have the answer? <Link className='text-green-700' to={'/signin'}>Log In</Link> to help your community.
+        </div>
+      }
     </div>
   );
 }

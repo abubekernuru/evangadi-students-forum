@@ -17,10 +17,10 @@ function App() {
       <Route path='/' element={<Landing />}></Route>
       <Route path='/home' element={<Home />}></Route>
       <Route path='/about' element={<About />}></Route>
+        <Route path='/qdetailanda/:id' element={<QdetailandA />}></Route>
       <Route element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />}></Route>
         <Route path='/askquestion' element={<AsqQuestion />}></Route>
-        <Route path='/qdetailanda/:id' element={<QdetailandA />}></Route>
       </Route>
     </Routes>
     <Footer />
