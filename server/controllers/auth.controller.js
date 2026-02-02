@@ -24,6 +24,8 @@ const signup = async (req, res, next) => {
         res
             .cookie('access_token', token, {
                 httpOnly: true,
+                secure: true,    // added for deployment cors failure
+                sameSite: 'none', // added for deployment cors failure
                 expires: expiryDate
             })
             .status(200)
