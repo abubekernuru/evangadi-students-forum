@@ -33,7 +33,7 @@ function QdetailandA() {
         const data = await res.json();
         if(data.success === false){
           return;
-        }
+        }       
         // setAnswerData(data)
         if (Array.isArray(data)) {
           setAnswerData(data);

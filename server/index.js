@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors')
+const dotenv = require('dotenv');
+dotenv.config();
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-const MongoURI = "mongodb://localhost:27017/student_forum"
-mongoose.connect(MongoURI)
+
+mongoose.connect(process.env.MongoURI)
     .then(()=>{
         console.log("Connected to MongoDb!")
         app.listen(3000, ()=> {
@@ -18,7 +20,10 @@ mongoose.connect(MongoURI)
     })
 
 app.use(express.json());
-app.use(cors())
+app.use(cors({
+    origin: process.env.Frontend_URL,
+    credentials: true,
+}))
 
 // test api route
 app.get('/', (req, res)=> {
