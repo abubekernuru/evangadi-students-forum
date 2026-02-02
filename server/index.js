@@ -7,6 +7,7 @@ dotenv.config();
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
+// deployment error fix code
 const FRONTEND_URL = (process.env.FRONTEND_URL || '').replace(/\/$/, '');
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || FRONTEND_URL || 'http://localhost:5173')
     .split(',')
