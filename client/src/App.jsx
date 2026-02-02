@@ -3,7 +3,6 @@ import Home from './pages/Home.jsx'
 import QdetailandA from './pages/QdetailandA.jsx'
 import Landing from './pages/Landing.jsx'
 import AsqQuestion from './pages/AsqQuestion.jsx'
-import About from './pages/About.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import Profile from './pages/Profile.jsx'
@@ -14,9 +13,8 @@ function App() {
   <BrowserRouter>
   <Header />
     <Routes>
-      <Route path='/' element={<Landing />}></Route>
-      <Route path='/home' element={<Home />}></Route>
-      <Route path='/about' element={<About />}></Route>
+      <Route path='/signin' element={<Landing />}></Route>
+      <Route path='/' element={<Home />}></Route>
         <Route path='/qdetailanda/:id' element={<QdetailandA />}></Route>
       <Route element={<PrivateRoute />}>
         <Route path='/profile' element={<Profile />}></Route>

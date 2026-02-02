@@ -33,7 +33,7 @@ function SignIn({switchToSignUp}) {
         }
         dispatch(signInSuccess(data))
         // localStorage.setItem('token', data.token);
-        navigate('/home')
+        navigate('/')
     } catch (error) {
       dispatch(signInFailure(error.message))
     }

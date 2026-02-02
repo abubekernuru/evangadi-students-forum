@@ -51,6 +51,7 @@ function AsqQuestion() {
             <p className='text-xs text-gray-500 mb-1'>Be specific and imagine you’re asking a question to another person.</p>
             <input 
               type="text" 
+              required
               className='border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all' id='title' 
               placeholder='e.g. How do I use Redux Persist with cookies?'
               onChange={(e)=>handleChange(e)}
@@ -64,6 +65,7 @@ function AsqQuestion() {
               id='content' 
               placeholder='Explain your problem here...' 
               rows={6} 
+              required
               className='border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all'
               onChange={(e)=>handleChange(e)}
               ></textarea>

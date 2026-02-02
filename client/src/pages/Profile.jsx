@@ -83,7 +83,7 @@ function Profile() {
     }
     const handleChange = (e)=>{
         if (e.target.value === "") {
-        const { [e.target.id]: removed, ...rest } = formData;
+        const { [e.target.id]: _, ...rest } = formData;
         setFormData(rest);
     } else {
         setFormData({ ...formData, [e.target.id]: e.target.value });

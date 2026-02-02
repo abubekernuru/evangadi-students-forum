@@ -3,9 +3,9 @@ import SignIn from './SignIn'
 import SignUp from './SignUp'
 
 function Landing() {
-  const [isLogin, setIsLogin] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
   return (
-    <section className="max-w-7xl mx-auto px-4 py-20 flex flex-col md:flex-row gap-10 items-center">
+    <section className="max-w-7xl mx-auto px-4 py-20 flex flex-col md:flex-row gap-10">
       <div className="w-full md:w-1/2">
         {isLogin
           ?
@@ -15,7 +15,7 @@ function Landing() {
         }
       </div>
       {/* About section */}
-      <div className="w-full md:w-1/2 flex flex-col gap-6">
+      <div className="w-full md:w-1/2 flex flex-col gap-6 pt-10 mt-5">
           <h5 className="text-orange-500 font-semibold uppercase tracking-wide">About</h5>
           <h1 className="text-4xl font-bold text-gray-800 leading-tight">
             Evangadi Networks Q&A

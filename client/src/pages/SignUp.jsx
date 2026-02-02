@@ -36,7 +36,7 @@ function SignUp({switchToSignIn}) {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate('/home')
+      navigate('/')
     } catch (error) {
       console.log(error)
       dispatch(signInFailure(error.message) || "Signup failed");
