@@ -10,7 +10,7 @@ function Header() {
     const baseURL = import.meta.env.VITE_API_BASE_URL || '';
         const handleSignout = async ()=>{
             try {
-                const res = await fetch(`${baseURL}/api/auth/signout`);
+                const res = await fetch(`${baseURL}/api/auth/signout`, { credentials: 'include' });
                 const data = await res.json();
                 if(!res.ok){
                     console.log(data.message || "Signout failed");

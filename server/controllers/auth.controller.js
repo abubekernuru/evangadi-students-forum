@@ -21,13 +21,14 @@ const signup = async (req, res, next) => {
         const token = jwt.sign({id: newUser._id, username: newUser.username}, process.env.JWT_SECRET);
         const {password: pass, ...rest} = newUser._doc;
         const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            expires: expiryDate
+        };
         res
-            .cookie('access_token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-                expires: expiryDate
-            })
+            .cookie('access_token', token, cookieOptions)
             .status(200)
             .json(rest);
         
@@ -50,13 +51,14 @@ const signin = async (req, res, next) => {
         const token = jwt.sign({id: validUser._id, username: validUser.username}, process.env.JWT_SECRET);
         const {password: pass, ...rest} = validUser._doc;
         const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            expires: expiryDate
+        };
         res
-            .cookie('access_token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-                expires: expiryDate
-            })
+            .cookie('access_token', token, cookieOptions)
             .status(200)
             .json(rest);
     } catch (error) {
@@ -72,13 +74,14 @@ const google = async (req, res, next) => {
             const token = jwt.sign({id: user._id, username: user.username}, process.env.JWT_SECRET);
             const {password: pass, ...rest} = user._doc;
             const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            const cookieOptions = {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                expires: expiryDate
+            };
             res
-                .cookie('access_token', token, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === 'production',
-                    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-                    expires: expiryDate
-                })
+                .cookie('access_token', token, cookieOptions)
                 .status(200)
                 .json(rest);
         }else {
@@ -96,10 +99,14 @@ const google = async (req, res, next) => {
             const token = jwt.sign({id: newUser._id, username: newUser.username}, process.env.JWT_SECRET);
             const {password: pass, ...rest} = newUser._doc;
             const expiryDate = new Date(Date.now() + 24 * 60 * 60 * 1000);
+            const cookieOptions = {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+                expires: expiryDate
+            };
             res
-                .cookie('access_token', token, { 
-                    httpOnly: true,
-                    expires: expiryDate})
+                .cookie('access_token', token, cookieOptions)
                 .status(201)
                 .json(rest);
         }
@@ -108,11 +115,17 @@ const google = async (req, res, next) => {
     }
 }
 
-const signout = async (req, res, next) => {try {
+const signout = async (req, res, next) => {
+    try {
+        const clearOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+        };
         res
-        .clearCookie("access_token")
-        .status(200)
-        .json("User logged out succefully!")
+            .clearCookie('access_token', clearOptions)
+            .status(200)
+            .json('User logged out succefully!');
     } catch (error) {
         next(error)
     }

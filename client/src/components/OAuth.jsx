@@ -20,6 +20,7 @@ function OAuth() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify({
                     email: result.user.email,
                     firstName: result.user.displayName.split(" ")[0],

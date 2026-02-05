@@ -14,7 +14,11 @@ function QdetailandA() {
   const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
 
   useEffect(()=>{
-    if (!params.id) return;
+    console.log('QdetailandA params:', params);
+    if (!params.id) {
+      console.warn('No params.id — skipping fetches');
+      return;
+    }
     const fetchQuestion = async () =>{
       try {
         const res = await fetch(`${baseUrl}/api/question/${params.id}`);
@@ -52,6 +56,10 @@ function QdetailandA() {
   
   const handleSubmit = async(e)=> {
     e.preventDefault();
+    if (!params.id) {
+      console.warn('Attempted to post answer without params.id');
+      return;
+    }
     try {
       const res = await fetch(`${baseUrl}/api/answer/${params.id}`, {
         method: 'POST',
