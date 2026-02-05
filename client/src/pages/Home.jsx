@@ -13,6 +13,7 @@ function Home() {
       try {
         const res = await fetch(`${baseUrl}/api/question/`)
         const data = await res.json()
+        console.log('fetched questions:', data);
         if(data.success===false){
           return;
         }
@@ -42,7 +43,9 @@ function Home() {
     <h2 className='text-2xl font-bold text-gray-800 border-b pb-4'>Recent Questions</h2>
 
     {questionData.length == 0 ? <Link to={'/askquestion'} className='text-red-700 font-bold text-center bg-yellow-50 text-lg block'>No questions yet, Create one!</Link> :
-    questionData.map((question)=>(<div key={question._id} className='flex gap-6 items-center p-4 border rounded-xl hover:shadow-md transition-shadow bg-white'>
+    questionData.map((question)=>(
+      question && question._id ? (
+        <div key={question._id} className='flex gap-6 items-center p-4 border rounded-xl hover:shadow-md transition-shadow bg-white'>
       <div className='flex flex-col items-center min-w-17.5'>
         <img src={question.userRef?.avatar} alt="profile" 
             className='h-12 w-12 rounded-full ring-2 ring-blue-100 p-0.5' />
@@ -55,7 +58,9 @@ function Home() {
         </p>
         <FaChevronRight className="text-gray-300 group-hover:text-blue-500 " />
       </Link>
-    </div>))}
+      </div>
+      ) : null
+    ))}
   </div>
 </div>
   )

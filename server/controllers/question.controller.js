@@ -11,16 +11,23 @@ const createQuestion = async (req, res, next) => {
     }
 }
 
+const mongoose = require('mongoose');
+
 const getQuestion = async (req, res, next) => {
     try {
-        const question = await Question.findById(req.params.id)
+        const id = req.params.id;
+        if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: 'Invalid question id' });
+        }
+
+        const question = await Question.findById(id)
             .populate('userRef', 'username avatar');
-    
+
         if(!question){
             return res.status(404).json({message: 'Question not found'});
         }
         res.status(200).json(question);
-        
+
     } catch (error) {
         next(error)
     }
