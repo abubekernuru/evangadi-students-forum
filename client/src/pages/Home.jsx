@@ -11,7 +11,7 @@ function Home() {
   useEffect(()=>{
     const getAllQuestions = async ()=>{
       try {
-        const res = await fetch(`${baseUrl}/api/question/`)
+        const res = await fetch(`${baseUrl}/api/question/`, { credentials: 'include' })
         const data = await res.json()
         console.log('fetched questions:', data);
         if(data.success===false){

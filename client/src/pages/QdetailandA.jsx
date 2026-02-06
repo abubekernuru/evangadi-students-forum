@@ -21,7 +21,7 @@ function QdetailandA() {
     }
     const fetchQuestion = async () =>{
       try {
-        const res = await fetch(`${baseUrl}/api/question/${params.id}`);
+        const res = await fetch(`${baseUrl}/api/question/${params.id}`, { credentials: 'include' });
         const data = await res.json();
         if(data.success === false){
           return
@@ -35,7 +35,7 @@ function QdetailandA() {
 
     const fetchAnswer = async () => {
       try {
-        const res = await fetch(`${baseUrl}/api/answer/${params.id}`)
+        const res = await fetch(`${baseUrl}/api/answer/${params.id}`, { credentials: 'include' })
         const data = await res.json();
         if(data.success === false){
           return;
