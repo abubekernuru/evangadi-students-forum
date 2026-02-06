@@ -13,7 +13,7 @@ function Home() {
       try {
         const res = await fetch(`${baseUrl}/api/question/`, { credentials: 'include' })
         const data = await res.json()
-        console.log('fetched questions:', data);
+        // console.log('fetched questions:', data);
         if(data.success===false){
           return;
         }
@@ -54,7 +54,7 @@ function Home() {
       
       <Link to={`/qdetailanda/${question._id}`} className='flex-1 flex justify-between gap-5 items-center group'>
         <p className='text-gray-700 font-medium group-hover:text-blue-600 transition-colors line-clamp-2'>
-          {question.content} 
+          {question.title} 
         </p>
         <FaChevronRight className="text-gray-300 group-hover:text-blue-500 " />
       </Link>
